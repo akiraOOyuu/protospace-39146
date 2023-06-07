@@ -1,17 +1,23 @@
 class PrototypesController < ApplicationController
+ before_action :authenticate_user!, except: [:index, :show]
+ before_action :restrict_direct_access, only: [:edit, :update, :destroy]
  before_action :set_proto, only: [ :edit, :show, :update]
  before_action :move_to_index, except: [:index, :show]
 
+ 
+
+ 
+
   def index
     @prototypes = Prototype.all
-    @user_id = current_user.name
+   
   end
+
   def new
     @prototype = Prototype.new
   end
 
   def create
-
     @prototype = Prototype.new(prototype_params)
  
     if @prototype.save
@@ -25,8 +31,7 @@ class PrototypesController < ApplicationController
    
    @comment = Comment.new
    @comments = @prototype.comments.includes(:user)
-   
-  end
+   end
 
   def edit
    
@@ -64,4 +69,10 @@ class PrototypesController < ApplicationController
         redirect_to action: :index
     end
   end
+  def restrict_direct_access
+    if request.referrer.nil? || URI(request.referrer).host != request.host
+      redirect_to root_path
+    end
+  end
+  
 end
