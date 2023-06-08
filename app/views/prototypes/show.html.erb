@@ -31,8 +31,8 @@
         </div>
       </div>
       <div class="prototype__comments">
-      <% if user_signed_in? %>
-        <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
+        <% if user_signed_in? %>
+         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
           <%= form_with  model: @comment, url: prototype_comments_path(@prototype), local: true do |f| %>
             <div class="field">
              <%= f.label :content, "コメント" %><br />
@@ -41,7 +41,8 @@
             <div class="actions">
                <%= f.submit "送信する", class: :form__btn  %>
             </div>
-         <% end %>
+          <% end %>
+        <% end %>
         <%# // ログインしているユーザーには上記を表示する %>
         <ul class="comments_lists">
           <%# 投稿に紐づくコメントを一覧する処理を記述する %>
@@ -53,10 +54,10 @@
              <%= comment.content %>
              </p>
             </li>
-          <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
+           <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
           <% end %>
             </ul>
-        <% end %>
+        
       </div>
     </div>
   </div>
